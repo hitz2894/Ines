@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<package schemaVersion="1.1" xmlns:xs="http://www.w3.org/2001/XMLSchema-instance" xs:noNamespaceSchemaLocation="PACK.xsd">
+  <vendor>InES</vendor>
+  <name>CTBoard14_DFP</name>
+  <description>CT Board 14 (STM32F429ZI) Device Support</description>
+  <license><!-- https://creativecommons.org/licenses/by/4.0/ --></license>
+  <url>https://ennis.zhaw.ch/pack/</url>
+  <supportContact>https://ennis.zhaw.ch/</supportContact>
+  
+  <releases>
+    <release version="4.0.2">
+      * fixed bug: fixed 7 Segment address from 0x60000100 to 0x60000110 
+    </release>
+    <release version="4.0.1">
+      * changed elements of register structs (example: from ARF[2] to ARFL and ARFH): 
+        - reg_stm32f4xx.h
+        - system_ctboard.c
+        - hal_adc.c
+        - hal_gpio.c
+        - hal_rcc.c
+        - hal_systick.c
+        - hal_timer.c
+    </release>
+    <release version="4.0.0">
+      * fixed bug: hal_systick.c, setting clock source fixed
+      * fixed bug: ctboard.tc1, pin assignment for UART changed
+      * fixed bug: sram_register.vhd, SRAM access LCD binary pos 0..7
+      * fixed bug: hal_adc.c, hal_rcc.c, hal_timer.c, | replaced with || and &amp; with &amp;&amp;
+      * fixed bug: hal_timer.c
+        - hal_timer_compare_write() array out of bounds implemented, &amp;&amp; instead of |
+        - hal_timer_counter_read(), hal_timer_compare_read() &amp;&amp; instead of |
+      * fixed bug: hal_seg7.c
+        - hal_ct_seg7_get_seg7() array out of bounds implemented
+        - hal_ct_seg7_get_bcd() max bcd value 0x99
+        - hal_ct_seg7_dot_set() will not erease higher display
+    </release>
+    <release version="3.0.5">
+      * fixed bug: hal_timer.c
+      * fixed bug: reg_ctboard.h, changed LCD Binary struct to 128bit
+    </release>
+    <release version="3.0.4">
+      * fixed bug: hal_rcc.h, added HCLK divider 1
+      * updated hal_timer.c for TIM1/8, TIM6/7, TIM9..11, TIM12..14
+      * updated hal_timer.c for clock source and input capture
+    </release>
+    <release version="3.0.3">
+      * fixed bug: corrected 7 segment binary interface address
+      * fixed bug: hal_ct_lcd_clear()
+      * fixed bug: hal_gpio_set_irq()
+      * updated reg_stm32f4xx.h (DBG)
+    </release>
+    <release version="3.0.2">
+      * updated stack size to 32KB
+      * updated heap size to 8KB
+    </release>
+    <release version="3.0.1">
+      * added stack fingerprinting
+      * updated startup code (editable)
+    </release>
+    <release version="3.0.0">
+      * requires CPLD sw >b3428!
+      * new interface for LCD
+      * fixed bug: reg_ctboard.h
+        - CT_LED->BYTE.LED15_7 changed to LED15_8
+        - CT_DIPSW->BYTE.S15_7 changed to S15_8
+      * fixed bug: hal_ct_seg7_raw_write(...)
+        - no need to clear bits before write
+      * removed hal_ct_dipsw.c
+      * removed hal_ct_button.c
+      * removed hal_ct_led.c
+      * updated reg_stm32f4xx.h (USART, FMC)
+      * updated hal_fmc.c
+      * added (RCC) enable/disable, reset macros
+      * fixed bug: example projects now correctly shown
+    </release>
+    <release version="2.2.0">
+      * removed utils_ctboard.c
+      * added HAL for CT Board
+      * updated HAL for STM32 (DAC, EXTI, SPI, SYSTICK)
+      * updated timer HAL (input capture / clock source / DMA)
+    </release>
+    <release version="2.1.2">
+      * testing automatic update functionality (url tag in pdsc)
+    </release>
+    <release version="2.1.1">
+      * fixed bug: resolved warnings in hal
+      * fixed bug: updated version of hal files in pack description
+    </release>
+    <release version="2.1.0">
+      * release version of 2.x
+      * updated manual for CT Board
+    </release>
+    <release version="2.0.4">
+      * fixed bug: (HAL) now cant overwrite the debug interface bits by using gpio a
+      * fixed bug: (HAL) the pupd register of gpios doesnt need a pattern. create pattern removed at that.
+    </release>
+    <release version="2.0.3">
+      * added support for m4 cpu
+      * added support for fpu (m4)
+    </release>
+    <release version="2.0.2">
+      * example projects for C and ASM added
+    </release>
+    <release version="2.0.1">
+      * update HAL
+    </release>
+    <release version="2.0.0">
+      * added HAL
+      * startup uses HAL now
+      * changed registry file, access with structs
+    </release>
+    <release version="1.2.0">
+      * requires CPLD sw >b1402!
+      * unified startup for ASM and C projects
+      * changed clocks:
+        - SYSCLK: 168 MHz
+        - AHBCLK: 84 MHz
+        - APB1CLK: 42 MHz
+        - APB2CLK: 42 MHz
+    </release>
+    <release version="1.1.1">
+      * added datasheet of LCD display
+      * fixed bug: all clocks are now correctly initialised
+    </release>
+    <release version="1.1.0">
+      * added function to control LCD display (only works with CPLD sw >b846!)
+      * all four SRAM banks active
+    </release>
+    <release version="1.0.3">
+      * competed system control block registers in reg_stm32f4xx.h
+      * added programming manual (PM0214) to books
+      * added STK (system tick timer) registers to reg_stm32f4xx.h
+      * added MPU registers to reg_stm32f4xx.h
+      * added FPU registers to reg_stm32f4xx.h
+    </release>
+    <release version="1.0.2">
+      * added registers for dma controller to reg_stm32f4xx.h
+    </release>
+    <release version="1.0.1">
+      * added missing registers to reg_stm32f4xx.h
+      * fixed bug: added "volatile" modificator to pointers in reg_stm32f4xx and reg_ctboard.h
+      * fixed bug: removed setting of REG_SCB_VTOR in system_ctboard.c / was false value
+    </release>
+    <release version="1.0.0">
+      * updated CT_Manual.pdf
+    </release>
+    <release version="0.0.8">
+      * fixed bug: reg_stm32f4xx.h
+        - register TIMx_ARR renamed from (incorrect) TIMx_AAR
+    </release>
+    <release version="0.0.7">
+      * STARTUP_ASM not allowed with "normal" STARTUP
+    </release>
+    <release version="0.0.6">
+      * fixed bug: InES sw components only available with InES devices
+      * fixed bug: books accessible
+    </release>
+    <release version="0.0.5">
+      * fixed bug: all address signals now work properly
+      * fixed bug: utils_ctboard no longer available within asm project
+    </release>
+    <release version="0.0.4">
+      * split startup file for C and ASM projects
+      * removed subfamily "HS14"
+      * registry header file now contains:
+        - TIM1..14 timer
+        - RTC real time clock
+        - IWDG independent watchdog
+        - I2C inter-integrated circuit interface
+        - PWR power controller
+        - DAC digital analog converter
+        - ADC analog digital converter
+        - SYSCFG system configuration controller
+        - GPIO general purpose input output
+        - RCC reset and clock controller
+        - FLASH flash memory interface
+        - FMC flexible memory controller
+    </release>
+    <release version="0.0.3">
+      * initialize fmc
+      * functions for memory access
+    </release>
+  </releases>
+
+  <keywords>
+    <!-- keywords for indexing -->
+    <keyword>InES</keyword>
+    <keyword>ZHAW</keyword>
+    <keyword>STM32F4</keyword>
+    <keyword>STM32F4xx</keyword>
+  </keywords>
+
+  <!-- boards section (mandatory for Board Support Packs) -->
+  <!-- 
+  <boards>
+  </boards>
+  -->
+
+  <!-- devices section (mandatory for Device Family Packs) -->
+  <devices>
+    <family Dfamily="InES CT-Board" Dvendor="STMicroelectronics:13">
+      <description>
+        Das InES CT Board HS14.
+      </description>
+
+      <book name="Documents\CT_Manual.pdf" title="CT Board Handbuch"/>
+      <book name="Documents\RM0090.pdf" title="STM32F4 Reference Manual"/>
+      <book name="Documents\PM0214.pdf" title="STM32F4 Programming Manual"/>
+      <book name="Documents\STM32F429xx.pdf" title="STM32F429 Datasheet"/>
+      <book name="Documents\UM1670.pdf" title="STM32F429 Discovery Manual"/>
+      <book name="Documents\NHD-C0220BiZ.pdf" title="LCD Display Datasheet"/>
+
+      <debug svd="SVD\STM32F429x.svd"/>
+
+      <memory id="IROM1" start="0x08000000" size="0x200000" startup="1" default="1"/>
+      <memory id="IRAM1" start="0x20000000" size="0x30000" init="0" default="1"/>
+      <memory id="IRAM2" start="0x10000000" size="0x10000" init="0" default="1"/>
+
+      <algorithm name="Flash\STM32F4xx_2048.FLM" start="0x08000000" size="0x200000" default="1"/>
+
+      <feature type="WDT"  n="2"/>
+      <feature type="RTC"  n="32768"/>
+      <feature type="I2S"  n="2"/>
+      <feature type="Temp"  n="-40"  m="85"/>
+
+      <feature type="Timer" n="12" m="16"/>
+      <feature type="DAC" n="2" m="12"/>
+      <feature type="SPI" n="6" m="42000000"/>
+      <feature type="ComOther" n="1" name="SAI Interface"/>
+      <feature type="I2C" n="3"/>
+      <feature type="USART" n="4" m="11250000"/>
+      <feature type="UART" n="4" m="11250000"/>
+      <feature type="USBOTG" n="2"/>
+      <feature type="CAN" n="2"/>
+      <feature type="SDIO" n="1" m="8" name="Secure Digital IO"/>
+      <feature type="ETH" n="1" m="100000000"/>
+      <feature type="VCC" n="1.80" m="3.60"/>
+      <feature type="Camera" n="1" m="14"/>
+
+      <feature type="ADC" n="24" m="12"/>
+      <feature type="IOs" n="114"/>
+      <feature type="QFP" n="144"/>
+      <feature type="CSP" n="143"/>
+
+      <device Dname="CT_Board_HS14_M0">
+        <processor Dclock="180000000" Dcore="Cortex-M0" DcoreVersion="r0p1" Dfpu="0" Dmpu="1" Dendian="Little-endian"/>
+      </device>
+      <device Dname="CT_Board_HS14_M4">
+        <processor Dclock="180000000" Dcore="Cortex-M4" DcoreVersion="r0p1" Dfpu="1" Dmpu="1" Dendian="Little-endian"/>
+      </device>
+    </family>
+  </devices>
+
+  <!-- boards section (mandatory for Board Support Packs) -->
+  <boards>
+    <board vendor="InES" name="InES CT-Board" revision="3.3">
+      <description>InES CT-Board rev. 3.3.</description>
+      <mountedDevice deviceIndex="0" Dvendor="STMicroelectronics:13" Dname="CT_Board_HS14_M0" />
+      <compatibleDevice deviceIndex="0" Dvendor="STMicroelectronics:13" Dfamily="InES CT-Board" />
+    </board>
+  </boards>
+
+  <!-- examples section (optional for all Software Packs)-->
+  <examples>
+    <example name="Example Project for C" doc="Readme.txt" folder="ExampleC" version="3.0.0">
+      <description>Example Project for C</description>
+      <board name="InES CT-Board" vendor="InES" />
+      <project>
+        <environment name="uv" load="Project.uvprojx" />
+      </project>
+      <attributes>
+        <component Cclass="Device" Cgroup="Startup" />
+        <component Cclass="HAL" Cgroup="PWR" />
+        <component Cclass="HAL" Cgroup="RCC" />
+        <component Cclass="HAL" Cgroup="GPIO" />
+        <component Cclass="HAL" Cgroup="FMC" />
+      </attributes>
+    </example>
+    <example name="Example Project for ASM" doc="Readme.txt" folder="ExampleASM" version="3.0.0">
+      <description>Example Project for ASM</description>
+      <board name="InES CT-Board" vendor="InES" />
+      <project>
+        <environment name="uv" load="Project.uvprojx" />
+      </project>
+      <attributes>
+        <component Cclass="Device" Cgroup="Startup" />
+        <component Cclass="HAL" Cgroup="PWR" />
+        <component Cclass="HAL" Cgroup="RCC" />
+        <component Cclass="HAL" Cgroup="GPIO" />
+        <component Cclass="HAL" Cgroup="FMC" />
+      </attributes>
+    </example>
+  </examples>
+  
+  <!-- conditions section (optional for all Software Packs)-->
+  <conditions>
+    <condition id="DEVICE_M0">
+      <require Dvendor="STMicroelectronics:13" Dname="CT_Board_HS14_M0"/>
+    </condition>
+    <condition id="DEVICE_M4">
+      <require Dvendor="STMicroelectronics:13" Dname="CT_Board_HS14_M4"/>
+    </condition>
+    <condition id="HAL">
+      <accept condition="DEVICE_M0"/>
+      <accept condition="DEVICE_M4"/>
+    </condition>
+    <condition id="SYSTEM">
+      <require condition="HAL"/>
+      <require Cclass="HAL" Cgroup="FMC"/>
+      <require Cclass="HAL" Cgroup="GPIO"/>
+      <require Cclass="HAL" Cgroup="PWR"/>
+      <require Cclass="HAL" Cgroup="RCC"/>
+    </condition>
+    <condition id="SYSTEM_M0">
+      <require condition="DEVICE_M0"/>
+      <require condition="SYSTEM"/>
+    </condition>
+    <condition id="SYSTEM_M4">
+      <require condition="DEVICE_M4"/>
+      <require condition="SYSTEM"/>
+    </condition>
+  </conditions>
+  
+  <!-- component section (optional for all Software Packs) -->
+  <!-- Cversion is necessary -->
+  <components>
+    <!-- 
+        InES HAL 
+    -->
+    <component Cclass="HAL" Cgroup="ADC" Cversion="4.0.1" condition="HAL">
+      <description>Hardware Acstraction Layer for ADC</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_adc.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_adc.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="DAC" Cversion="2.2.0" condition="HAL">
+      <description>Hardware Acstraction Layer for DAC</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_dac.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_dac.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="DMA" Cversion="2.2.0" condition="HAL">
+      <description>Hardware Acstraction Layer for DMA</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_dma.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_dma.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="FMC" Cversion="3.0.1" condition="HAL">
+      <description>Hardware Acstraction Layer for FMC</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_fmc.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_fmc.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="GPIO" Cversion="4.0.1" condition="HAL">
+      <description>Hardware Acstraction Layer for GPIO</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_gpio.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_gpio.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="PWR" Cversion="2.2.0" condition="HAL">
+      <description>Hardware Acstraction Layer for PWR</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_pwr.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_pwr.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="RCC" Cversion="4.0.1" condition="HAL">
+      <description>Hardware Acstraction Layer for RCC</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_rcc.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_rcc.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="SPI" Cversion="2.2.0" condition="HAL">
+      <description>Hardware Acstraction Layer for SPI</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_spi.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_spi.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="SYSTICK" Cversion="4.0.1" condition="HAL">
+      <description>Hardware Acstraction Layer for TIMER</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_systick.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_systick.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="TIMER" Cversion="4.0.1" condition="HAL">
+      <description>Hardware Acstraction Layer for TIMER</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="HAL\Include\hal_common.h"/>
+        <file category="header" name="HAL\Include\hal_timer.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_timer.c" attr="config"/>
+      </files>
+    </component>
+    <!-- 
+        InES CT-Board HAL 
+    -->
+    <component Cclass="HAL" Cgroup="CT Board" Csub="LCD" Cversion="3.0.3" condition="HAL">
+      <description>Hardware Acstraction Layer for CT Board LCD</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_ctboard.h"/>
+        <file category="header" name="HAL\Include\hal_ct_lcd.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_ct_lcd.c" attr="config"/>
+      </files>
+    </component>
+    <component Cclass="HAL" Cgroup="CT Board" Csub="7 segment" Cversion="4.0.0" condition="HAL">
+      <description>Hardware Acstraction Layer for CT Board 7 segment display</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <file category="include" name="HAL\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\reg_ctboard.h"/>
+        <file category="header" name="HAL\Include\hal_ct_seg7.h"/>
+        <!-- c files -->
+        <file category="source" name="HAL\Source\hal_ct_seg7.c" attr="config"/>
+      </files>
+    </component>
+    <!-- 
+        System Startup 
+    -->
+    <component  Cclass="Device"  Cgroup="Startup"  Cversion="4.0.1" condition="SYSTEM_M0">
+      <description>System Startup for InES CT Board</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\m0\platform_ctboard.h"/>
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="Device\Include\reg_ctboard.h"/>
+        <file category="header" name="Device\Include\system_ctboard.h"/>
+        <!-- c files -->
+        <file category="source" name="Device\Source\startup_ctboard.s" attr="config"/>
+        <file category="source" name="Device\Source\datainit_ctboard.s" attr="config"/>
+        <file category="source" name="Device\Source\system_ctboard.c" attr="config"/>
+      </files>
+    </component>
+    <component  Cclass="Device"  Cgroup="Startup"  Cversion="4.0.1" condition="SYSTEM_M4">
+      <description>System Startup for InES CT Board</description>
+      <files>
+        <!-- include folder -->
+        <file category="include" name="Device\Include\"/>
+        <!-- header files -->
+        <file category="header" name="Device\Include\m4\platform_ctboard.h"/>
+        <file category="header" name="Device\Include\reg_stm32f4xx.h"/>
+        <file category="header" name="Device\Include\reg_ctboard.h"/>
+        <file category="header" name="Device\Include\system_ctboard.h"/>
+        <!-- c files -->
+        <file category="source" name="Device\Source\startup_ctboard.s" attr="config"/>
+        <file category="source" name="Device\Source\datainit_ctboard.s" attr="config"/>
+        <file category="source" name="Device\Source\system_ctboard.c" attr="config"/>
+      </files>
+    </component>
+  </components>
+  
+  <!-- optional taxonomy section for defining new component Class and Group names -->
+  <!--
+  <taxonomy>
+  </taxonomy>
+  -->
+  
+</package>
